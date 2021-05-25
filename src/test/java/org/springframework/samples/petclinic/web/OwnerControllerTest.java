@@ -27,6 +27,7 @@ import static org.mockito.Mockito.reset;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -52,6 +53,17 @@ class OwnerControllerTest {
     @AfterEach
     void tearDown() {
         reset(clinicService);
+    }
+
+    @Test
+    void testNewOwnerPostValid() throws Exception {
+        mockMvc.perform(post("/owners/new")
+                        .param("firstName", "Jimmy")
+                        .param("lastName", "Buffett")
+                        .param("address", "123 Duval st")
+                        .param("city", "Key West")
+                        .param("telephone", "3122546352"))
+                .andExpect(status().is3xxRedirection());
     }
 
     @Test
